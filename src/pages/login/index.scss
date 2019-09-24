@@ -4,6 +4,33 @@
   position: relative;
   overflow: hidden;
 }
+.loginForm{
+  color: #ffffff;
+  height: 400px;
+  width: 400px;
+  position: absolute;
+  left: 180px;
+  top: 380px;
+  z-index: 999;
+  // border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .inputItem{
+    display: flex;
+    margin: 20px 0;
+    // flex-direction: column;
+    .input{
+      display: inline;
+      border: 1px solid #713896;
+      border-radius: 20px;
+      padding-left: 10px;
+      margin-left: 20px;
+      font-size: 22px; 
+    }
+  }
+}
 .loginBtn{
   width: 400px;
   height: 90px;

@@ -3,7 +3,8 @@ import { HTTP_STATUS } from '../const/status'
 import { base } from './config'
 import { logError } from './http'
 
-const token = ''
+let cookie = Taro.getStorageSync('cookie')
+
 const baseUrl = 'http://localhost:3000'
 
 export default {
@@ -11,7 +12,7 @@ export default {
     let { url, data } = params
     // let token = getApp().globalData.token
     // if (!token) login()
-    console.log('params', params,base)
+    console.log('params', params)
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType
     const option = {
@@ -20,7 +21,7 @@ export default {
       url: baseUrl + url,
       data: data,
       method: method,
-      header: { 'content-type': contentType, 'token': token },
+      header: { 'content-type': contentType, 'Cookie': cookie },
       success(res) {
         if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
           return logError('api', '请求资源不存在')

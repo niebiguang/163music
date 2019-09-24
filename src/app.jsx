@@ -3,7 +3,7 @@ import Index from './pages/index'
 import Login from './pages/login'
 
 import './app.scss'
-
+import './fonts/iconfont.css'
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -16,12 +16,16 @@ class App extends Component {
     pages: [
       'pages/login/index',
       'pages/index/index',
+      'pages/rankList/index',
+      'pages/songList/index',
+      'pages/recommendList/index',
+      'pages/broadcasting/index',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#542375',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'white'
     }
   }
 
@@ -44,3 +48,4 @@ class App extends Component {
 }
 
 Taro.render(<App />, document.getElementById('app'))
+ 

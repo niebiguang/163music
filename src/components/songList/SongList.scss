@@ -1,0 +1,29 @@
+.listItem{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+  .listItem-wrap{
+    display: flex;
+    .listItem-img{
+      width: 80px;
+      height: 80px;
+    }
+    .listItem-content{
+      margin-left: 20px;
+      .musicName{
+        font-size: 24px;
+      }
+      .musicPlayer{
+        font-size: 20px;
+        color: #666;
+      }
+    }
+  }
+  .listItem-operation{
+    width: 50px;
+    height: 50px;
+  }
+}
