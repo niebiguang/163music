@@ -14,12 +14,13 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/login/index',
-      'pages/index/index',
-      'pages/rankList/index',
-      'pages/songList/index',
-      'pages/recommendList/index',
-      'pages/broadcasting/index',
+      'pages/login/index',//登录
+      'pages/index/index',//首页
+      'pages/rankList/index',//排行榜
+      'pages/songList/index',//歌单
+      'pages/recommendList/index',//每日推荐
+      'pages/broadcasting/index',//电台
+      'pages/musicList/index',//电台
     ],
     window: {
       backgroundTextStyle: 'light',

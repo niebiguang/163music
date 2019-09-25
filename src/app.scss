@@ -1,2 +1,15 @@
 // @import "~taro-ui/dist/style/index.scss"
 @import "~taro-ui/dist/style/index.scss";
+// 全局loadding
+.loadding{
+  position: absolute;
+  top:60px;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($color: #000000, $alpha: .6)
+}

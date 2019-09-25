@@ -4,6 +4,7 @@ import './index.scss'
 import api from '../../utils/api'
 
 import { AtButton } from 'taro-ui'
+import Gedan from '../../components/gedan/Gedan'
 
 export default class Index extends Component {
 
@@ -100,7 +101,8 @@ export default class Index extends Component {
           </Navigator>
         </View>
         {/* 推荐歌单 */}
-        <View className="songList">
+        <Gedan {...songList}></Gedan>
+        {/* <View className="songList">
           {
             songList.map((item) => {
               return <View className="listItem" key={item.id}>
@@ -112,7 +114,7 @@ export default class Index extends Component {
             })
           }
             
-        </View>
+        </View> */}
       </View>
     )
   }
