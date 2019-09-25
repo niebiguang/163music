@@ -1,0 +1,52 @@
+.pages{
+  position: relative;
+  overflow: visible;
+}
+.tabList{
+  height: 60px;
+  width: 100%;
+  background-color: #ffffff;
+  overflow-x: auto;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #542375; 
+  position: sticky;
+  top:0;
+  .itemContent{
+    height: 100%;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    .listItem{
+      width: 130px;
+      height: 100%;
+      // margin: 0 5px;
+      font-size: 24px;
+      color: #999;
+      padding-bottom: 9px;
+      text-align: center;
+      position: relative;
+      line-height: 60px;
+    }
+    .active{
+      color: #542375;
+      font-weight: bold;
+    }
+    .listItem::after{
+      width: 0;
+      content: '';
+      height: 5px;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 4px;
+      left: 35px;
+      transition: width .5s;
+    }
+    .active::after{
+      width: 50%;
+      background-color: #542375;
+    }
+  }
+}
