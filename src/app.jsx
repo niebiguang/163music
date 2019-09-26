@@ -20,7 +20,8 @@ class App extends Component {
       'pages/songList/index',//歌单
       'pages/recommendList/index',//每日推荐
       'pages/broadcasting/index',//电台
-      'pages/musicList/index',//电台
+      'pages/musicList/index',//歌曲列表
+      'pages/player/index',//播放
     ],
     window: {
       backgroundTextStyle: 'light',

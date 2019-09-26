@@ -18,21 +18,28 @@ class SongList extends Component {
   componentDidHide () {}
 
   componentCatchError() {}
-
+  // 播放音乐
+  handlePlay = (e) => {
+    console.log(e)
+    let id = e.target.dataset.id
+    Taro.navigateTo({
+      url: '/pages/player/index?id=' + id
+    })
+  }
   render() {
     let list = this.props
     return (
       <View>
         {
           list.map((item) => {
-            return <View className="listItem">
+            return <View className="listItem" key={item.id} data-id={item.id} onClick={this.handlePlay}>
               <View className="listItem-wrap">
                 <View className="listItem-img">
-                  <Image src={item.album.blurPicUrl} style='width: 100%;height: 100%;border-radius: 10px'/>
+                  <Image src={item.album.blurPicUrl || item.al.picUrl} style='width: 100%;height: 100%;border-radius: 10px'/>
                 </View>
                 <View className="listItem-content">
                   <View className="musicName">{item.name}</View>
-                  <View className="musicPlayer">{item.artists[0].name}</View>
+                  <View className="musicPlayer">{item.artists[0].name || item.ar[0].name}</View>
                 </View>
               </View>
               <View className="listItem-operation">
