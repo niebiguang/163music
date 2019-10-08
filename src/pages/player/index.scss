@@ -1,0 +1,96 @@
+#video{
+  width: 100%;
+  height: 200px;
+  border: 1px solid #999;
+}
+
+.audio {
+  position: relative;
+  width: 750rpx;
+  height: 640rpx;
+  padding: 60rpx 32rpx 52rpx;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  background: rgba(0,0,0,.5);
+}
+
+.audio .bg {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 300%;
+  height: 300%;
+  z-index: -1;
+  filter: blur(40rpx);
+  
+}
+.editor {
+  padding: 32rpx;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 28rpx;
+  background: #fff;
+}
+.editor view {
+  max-width: 100% !important;
+}
+
+.audio .poster {
+  width: 238rpx;
+  height: 336rpx;
+}
+/* 音频滚动条start */
+.control-process {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.control-process .slider {
+  width: 526rpx;
+}
+.control-process text {
+  font-size: 24rpx;
+  color: #fff;
+}
+/* 音频滚动条end */
+.audio .icon-list {
+  position: relative;
+  margin: 0 auto;
+  line-height: 102rpx;
+}
+
+.audio .icon-list .audio-icon + .audio-icon {
+  margin-left: 72rpx;
+}
+
+.audio .icon-list .pattern {
+  position: absolute;
+  right: 20rpx;
+}
+
+.audio image {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: middle;
+}
+
+.audio .audio-play {
+  width: 92rpx;
+  height: 92rpx;
+}
+
+.audio .pattern {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* 音频end  */

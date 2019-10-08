@@ -1,6 +1,12 @@
 import Taro , { Component } from '@tarojs/taro';
 import { View, Text , Button} from '@tarojs/components';
 import api from '../../utils/api'
+import './index.scss'
+
+import prev from '../../images/shangyishou.png'
+import next from '../../images/xiayishou.png'
+import paly from '../../images/bofang.png'
+import stop from '../../images/zanting.png'
 
 export default class Player extends Component {
 
@@ -11,6 +17,7 @@ export default class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      songDetail: [],//歌曲详情
       musicUrl:'',//歌曲播放地址
       musicWord: '',//歌词
       commentList: [],//评论列表
@@ -24,8 +31,12 @@ export default class Player extends Component {
     let id = this.$router.params.id
     this.getMusicUrl(id)
     this.getMusicComment(id)
-    // this.getMusicDetail(id)
+    this.getMusicDetail(id)
     this.getMusicWord(id)
+    // const audioCtx = Taro.createAudioContext()
+    // audioCtx.autoplay = true
+    // audioCtx.loop = false
+    // audioCtx.src = this.state.musicUrl
   } 
   componentWillReceiveProps (nextProps,nextContext) {} 
   componentWillUnmount () {} 
@@ -33,14 +44,17 @@ export default class Player extends Component {
   componentDidHide () {} 
   componentDidCatchError () {} 
   componentDidNotFound () {} 
-  // 获得歌曲封面
+  // 获得歌曲详情
   getMusicDetail(id) {
     let params = {
-      id
+      ids: id
     }
-    api.get('/album',params)
+    api.get('/song/detail',params)
     .then(res => {
       console.log('详情》》》》》',res.data)
+      this.setState({
+        songDetail: res.data.songs
+      })
     })
   }
   // 获取音乐url
@@ -84,19 +98,20 @@ export default class Player extends Component {
       })
     })
   }
+  // 暂停播放
+  // handlePlay = (e) => {
+  //   console.log('aaa')
+  //   backgroundAudioManager.pause(() => {
+  //     console.log('暂停播放')
+  //   })
+  // }
+  handleClick = () => {
+    console.log('aaaa')
+  }
   render() {
     return (
       <View>
-        <Text>《歌曲名》</Text>
-        <Audio
-          src={this.state.musicUrl}
-          controls={true}
-          autoplay={false}
-          loop={false}
-          muted={true}
-          initialTime='30'
-          id='video'
-        /> 
+        <button onClick={this.handleClick}></button>
       </View>
     );
   }

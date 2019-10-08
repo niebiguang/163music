@@ -28,7 +28,8 @@ class App extends Component {
       navigationBarBackgroundColor: '#542375',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'white'
-    }
+    },
+    requiredBackgroundModes: ["audio", "location"]
   }
 
   componentDidMount () {}
