@@ -20,7 +20,7 @@ class SongList extends Component {
   componentCatchError() {}
   // 播放音乐
   handlePlay = (e) => {
-    console.log(e)
+    console.log('dianji')
     let id = e.target.dataset.id
     Taro.navigateTo({
       url: '/pages/player/index?id=' + id
