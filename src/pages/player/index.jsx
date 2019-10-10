@@ -30,7 +30,7 @@ export default class Player extends Component {
   }
 
   componentWillMount () {
-    backgroundAudioManager.src = this.state.musicUrl
+    // backgroundAudioManager.src = this.state.musicUrls
   }
   componentDidMount () {
     console.log(this.$router.params)

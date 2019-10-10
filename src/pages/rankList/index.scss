@@ -1,0 +1,33 @@
+.artistToplist{
+  width: 100%;
+  height: 200px;
+}
+
+// 推荐歌单
+.songList{
+  // border-top: 1px solid #542375;
+  padding: 0px 20px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .listItem{
+    width: 200px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .listItem-img{
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+    }
+    .listItem-text{
+      font-size: 22px;
+      margin-top: 10px;
+      // line-height: 32px;
+      display: inline-block;
+      height: 32px;
+    }
+  }
+}
