@@ -2,13 +2,24 @@ import Taro , { Component } from '@tarojs/taro';
 import { View, Text , Button} from '@tarojs/components';
 import api from '../../utils/api'
 import './index.scss'
+import {connect} from '@tarojs/redux'
+import { playTypeFun } from '../../action/paly'
 
 import prev from '../../images/shangyishou.png'
 import next from '../../images/xiayishou.png'
 import paly from '../../images/bofang.png'
 import stop from '../../images/zanting.png'
+// import { dispatch } from '../../../../../../../AppData/Local/Microsoft/TypeScript/3.6/node_modules/rxjs/internal/observable/pairs';
 
 const backgroundAudioManager = Taro.getBackgroundAudioManager()
+
+@connect (({ play }) => ({
+  play
+}), (dispatch) => ({
+  changePlayType(data) {
+    dispatch(playTypeFun(data))
+  }
+}))
 
 export default class Player extends Component {
 
@@ -31,6 +42,7 @@ export default class Player extends Component {
 
   componentWillMount () {
     // backgroundAudioManager.src = this.state.musicUrls
+    
   }
   componentDidMount () {
     console.log(this.$router.params)
@@ -54,6 +66,10 @@ export default class Player extends Component {
   componentDidHide () {} 
   componentDidCatchError () {} 
   componentDidNotFound () {} 
+
+  goLastSong = (e) => {
+    this.props.changePlayType(true)    
+  }
   // 获得歌曲详情
   getMusicDetail(id) {
     let params = {
@@ -115,23 +131,30 @@ export default class Player extends Component {
   // 暂停
   pauseMusic = ()=> {
     backgroundAudioManager.pause()
+    this.props.changePlayType(false)
     this.setState({
       isPlaying: false
     })
   }
   // 播放
   playMusic = ()=> {
+    // this.toChangePlay()
     console.log('aa')
     backgroundAudioManager.play()
     backgroundAudioManager.src = this.state.musicUrl
     backgroundAudioManager.title = this.state.songDetail[0].name
     // backgroundAudioManager.coverImgUrl = al.picUrl
+    this.props.changePlayType(true)
+    console.log('props>>>>>>>',this.props)
+    let isPlaying = this.props.play.isPlaying
     this.setState({
-      isPlaying: true
+      isPlaying
     })
   }
   //显示歌词
   showLyric = () => {
+    // console.log('props>>>>>>>',this.props)
+    // this.props.changePlayType(true)
     this.setState ({
       isShowLyric: true
     })
@@ -167,7 +190,7 @@ export default class Player extends Component {
             </ View>
             {/* <!-- 暂停播放图标 --> */}
             <View class="play_suspend">
-              <View class="icon_playing "><image src={prev} class=" icon_play" bindtap="go_lastSong" /></View>
+              <View class="icon_playing "><image src={prev} class=" icon_play" /></View>
               <View class="icon_playing">
                 {
                   !this.state.isPlaying ? <View onClick={this.playMusic}><image src={paly} class="{{'img_play_suspend'}}" /></View>
@@ -180,7 +203,7 @@ export default class Player extends Component {
               <View class="icon_playing "><image src={next} class=" icon_play" bindtap="go_lastSong" /></View>
             </ View>
           </ View>
-        {/* <button onClick={this.handleClick}>点击</button> */}
+        {/* <button onClick={this.goLastSong}>点击</button> */}
       </View>
     );
   }

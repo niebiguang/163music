@@ -157,6 +157,14 @@
   dependencies:
     uglify-js "^3.3.24"
 
+"@tarojs/redux@^1.3.19":
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/@tarojs/redux/-/redux-1.3.19.tgz#8c87bd4c99211c47c4fa2eca0029b97908c53c03"
+  integrity sha512-Ht0DjuAN3xlVBItfbM6p99QgcEUwLlSUXgvLcdkeVK2yXfA0qSeG7Sd2EIhK8Lh278URXC5ftDD5gWY+K6HWvA==
+  dependencies:
+    "@tarojs/taro" "1.3.19"
+    "@tarojs/utils" "1.3.19"
+
 "@tarojs/router@1.3.18":
   version "1.3.18"
   resolved "https://registry.yarnpkg.com/@tarojs/router/-/router-1.3.18.tgz#6c23fa32e5099ba57b12b9b1e28bd49e2677a01d"
@@ -247,10 +255,22 @@
   dependencies:
     "@tarojs/utils" "1.3.18"
 
+"@tarojs/taro@1.3.19":
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/@tarojs/taro/-/taro-1.3.19.tgz#d82adf68553cc52afdc3229be64fcd9cbe4a98db"
+  integrity sha512-0e0hePImuQa5Cck6ZQbUMjo3E5dAPwpGyqA2ksrxVX73wzTAAYKnE0/Kl8N8GGuRP2+MhOEkFAAAUWsoWaJYvA==
+  dependencies:
+    "@tarojs/utils" "1.3.19"
+
 "@tarojs/utils@1.3.18":
   version "1.3.18"
   resolved "https://registry.yarnpkg.com/@tarojs/utils/-/utils-1.3.18.tgz#094e61bd27839a699e766e546291508ba8dd742d"
   integrity sha512-SjQC9TyzKlN+5zYgJyHcZjoHRphJNxJ1UuTdLdMlb7d31ePI0W6rEhkUxP04etZJIwq4apwX/nX6O2h0hvsvSg==
+
+"@tarojs/utils@1.3.19":
+  version "1.3.19"
+  resolved "https://registry.yarnpkg.com/@tarojs/utils/-/utils-1.3.19.tgz#7726ec7baca29f6f372c2ad3ee3372e72fe90c7d"
+  integrity sha512-skQ5QJhPq7XT0r+uGrwcV54LYUd0wp3bDWCNYajE5eNtjBrqReKuQsYNdwsiArN0qrVWE7F+1KwpeP8JotH6Zg==
 
 "@tarojs/webpack-runner@1.3.18":
   version "1.3.18"
@@ -2582,6 +2602,11 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+
+deep-diff@^0.3.5:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+  integrity sha1-wB3mPvsO7JeYgB1Ax+Da4ltYLIQ=
 
 deep-equal@^1.0.1:
   version "1.1.0"
@@ -6901,6 +6926,26 @@ redent@^2.0.0:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
 
+redux-logger@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  integrity sha1-91VZZvMJjzyIYExEnPC69XeCdL8=
+  dependencies:
+    deep-diff "^0.3.5"
+
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
+
+redux@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
+  integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
+
 regenerate@^1.2.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
@@ -8041,6 +8086,11 @@ swiper@^4.4.2:
   dependencies:
     dom7 "^2.1.3"
     ssr-window "^1.0.1"
+
+symbol-observable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
 table@^4.0.1:
   version "4.0.3"

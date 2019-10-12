@@ -5,13 +5,31 @@ import playerBtn from '../../images/playbtn.png'
 class SongList extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      SongList: []
+    }
   }
 
   componentWillMount() {
+    console.log('歌曲数据》》》》》',this.props)
   }
 
   componentDidMount() {
   }
+
+  componentWillReceiveProps (nextProps,nextContext) {
+    console.log('歌曲数据》》》》》',nextProps)
+    let arrList = []
+    // nextProps.list.map((item) => {
+    //   return arrList.push(item)
+    // })
+    
+    arrList.push(nextProps)
+    this.setState({
+      SongList: arrList
+    })
+
+  } 
 
   componentDidShow () {}
 
@@ -20,10 +38,10 @@ class SongList extends Component {
   componentCatchError() {}
   // 播放音乐
   handlePlay = (e) => {
-    console.log('dianji')
+    console.log(this.state.SongList)
     let id = e.target.dataset.id
     Taro.navigateTo({
-      url: '/pages/player/index?id=' + id
+      url: '/pages/player/index?id=' + id + '&list=' + this.state.SongList
     })
   }
   render() {
