@@ -6,6 +6,18 @@ import playerBtn from '../../images/playbtn.png'
 import api from '../../utils/api'
 import { AtActivityIndicator } from 'taro-ui'
 import SongList from '../../components/songList/SongList'
+
+import {connect} from '@tarojs/redux'
+import { getMusicList } from '../../action/getMusicList'
+
+@connect (({ play }) => ({
+  play
+}), (dispatch) => ({
+  changePlayType(data) {
+    dispatch(getMusicList(data))
+  }
+}))
+
 class MusicList extends PureComponent {
 
   constructor(props) {
@@ -67,7 +79,7 @@ class MusicList extends PureComponent {
       this.setState({
         songList: res.data.songs,
         isLoadding: true
-      })
+      },this.props.changePlayType(res.data.songs))
     })
   }
   render() {

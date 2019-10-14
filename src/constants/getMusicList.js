@@ -1,0 +1,1 @@
+export const GET_MUSIC_LIST = 'get_music_list'

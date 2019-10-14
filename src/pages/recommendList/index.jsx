@@ -5,6 +5,18 @@ import api from '../../utils/api'
 import { AtActivityIndicator } from 'taro-ui'
 import SongList from '../../components/songList/SongList'
 import Loadding from '../../components/lodding/Loadding'
+
+import {connect} from '@tarojs/redux'
+import { getMusicList } from '../../action/getMusicList'
+
+@connect (({ play }) => ({
+  play
+}), (dispatch) => ({
+  changePlayType(data) {
+    dispatch(getMusicList(data))
+  }
+}))
+
 class Test extends Component {
   constructor(props) {
     super(props)
@@ -29,6 +41,7 @@ class Test extends Component {
             recommendList: res.data.recommend,
             isLoadding: true
           })
+          this.props.changePlayType(res.data.recommend)
         }
       })
   }

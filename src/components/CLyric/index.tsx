@@ -46,10 +46,10 @@
 
 //   render() {
 //     // const { lrc, lrcIndex, showLyric } = this.props
-//     const cls = classnames({
-//       song__lyric_components: true,
-//       hidden: !showLyric
-//     })
+//     // const cls = classnames({
+//     //   song__lyric_components: true,
+//     //   hidden: !showLyric
+//     // })
 //     return (
 //       <View className={cls} style={{
 //         overflow: lrc.scroll && !lrc.nolyric && !lrc.uncollected ? 'auto' : 'hidden'

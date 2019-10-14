@@ -21,6 +21,10 @@ const backgroundAudioManager = Taro.getBackgroundAudioManager()
   }
 }))
 
+@connect (({ getMusicList }) => ({
+  getMusicList
+}))
+
 export default class Player extends Component {
 
    config = {
@@ -30,6 +34,8 @@ export default class Player extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      musicList: [],//当前播放歌曲所在歌曲列表
+      musicIndex: '',//当前播放歌曲所在歌曲列表的index
       songDetail: [],//歌曲详情
       musicUrl:'',//歌曲播放地址
       musicWord: '',//歌词
@@ -42,11 +48,17 @@ export default class Player extends Component {
 
   componentWillMount () {
     // backgroundAudioManager.src = this.state.musicUrls
-    
+    this.setState({
+      musicList: this.props.getMusicList.musicList
+    })
   }
   componentDidMount () {
-    console.log(this.$router.params)
+    console.log('参数》》》》》》',this.$router.params)
+    this.setState({
+      musicIndex: this.$router.params.index
+    })
     let id = this.$router.params.id
+
     this.getMusicUrl(id)
     this.getMusicComment(id)
     this.getMusicDetail(id)
@@ -67,9 +79,7 @@ export default class Player extends Component {
   componentDidCatchError () {} 
   componentDidNotFound () {} 
 
-  goLastSong = (e) => {
-    this.props.changePlayType(true)    
-  }
+  
   // 获得歌曲详情
   getMusicDetail(id) {
     let params = {
@@ -138,12 +148,10 @@ export default class Player extends Component {
   }
   // 播放
   playMusic = ()=> {
-    // this.toChangePlay()
     console.log('aa')
-    backgroundAudioManager.play()
     backgroundAudioManager.src = this.state.musicUrl
     backgroundAudioManager.title = this.state.songDetail[0].name
-    // backgroundAudioManager.coverImgUrl = al.picUrl
+    backgroundAudioManager.play()
     this.props.changePlayType(true)
     console.log('props>>>>>>>',this.props)
     let isPlaying = this.props.play.isPlaying
@@ -151,6 +159,42 @@ export default class Player extends Component {
       isPlaying
     })
   }
+  // 下一首
+  goLastSong = (e) => {
+    console.log(e)
+    let index = Number(this.state.musicIndex) + 1
+    this.setState({
+      musicIndex: index
+    })
+    console.log('索引》》》》》》》',index)
+    let list = this.state.musicList
+    console.log(list[index])
+    let id = list[index].id
+    this.getMusicUrl(id)
+    this.getMusicComment(id)
+    this.getMusicDetail(id)
+    this.getMusicWord(id)
+    this.playMusic()
+  }
+
+  // 上一首
+  goPrevSong = () => {
+    // console.log(e)
+    let index = Number(this.state.musicIndex) - 1
+    this.setState({
+      musicIndex: index
+    })
+    console.log('索引》》》》》》》',index)
+    let list = this.state.musicList
+    console.log(list[index])
+    let id = list[index].id
+    this.getMusicUrl(id)
+    this.getMusicComment(id)
+    this.getMusicDetail(id)
+    this.getMusicWord(id)
+    this.playMusic()
+  }
+
   //显示歌词
   showLyric = () => {
     // console.log('props>>>>>>>',this.props)
@@ -190,7 +234,7 @@ export default class Player extends Component {
             </ View>
             {/* <!-- 暂停播放图标 --> */}
             <View class="play_suspend">
-              <View class="icon_playing "><image src={prev} class=" icon_play" /></View>
+              <View class="icon_playing " onClick={this.goPrevSong}><image src={prev} class=" icon_play" /></View>
               <View class="icon_playing">
                 {
                   !this.state.isPlaying ? <View onClick={this.playMusic}><image src={paly} class="{{'img_play_suspend'}}" /></View>
@@ -200,7 +244,7 @@ export default class Player extends Component {
                 
                 {/* <image onClick={this.pauseMusic} src={stop} hidden="{{isPlay}}" class="{{'img_play_suspend'}}" /> */}
               </View> 
-              <View class="icon_playing "><image src={next} class=" icon_play" bindtap="go_lastSong" /></View>
+              <View class="icon_playing " onClick={this.goLastSong}><image src={next} class=" icon_play" /></View>
             </ View>
           </ View>
         {/* <button onClick={this.goLastSong}>点击</button> */}
