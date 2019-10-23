@@ -43,6 +43,7 @@ export default class Player extends Component {
       hotCommentList: [],//热门评论列表
       isPlaying: false,//是否播放
       isShowLyric: false,//是否显示歌词
+      musicId: '',//当前歌曲id
     }
   }
 
@@ -55,22 +56,16 @@ export default class Player extends Component {
   componentDidMount () {
     console.log('参数》》》》》》',this.$router.params)
     this.setState({
-      musicIndex: this.$router.params.index
+      musicIndex: this.$router.params.index,
+      musicId: this.$router.params.id
     })
     let id = this.$router.params.id
 
-    this.getMusicUrl(id)
-    this.getMusicComment(id)
-    this.getMusicDetail(id)
-    this.getMusicWord(id)
-    
-    // const audioCtx = Taro.createAudioContext()
-    // audioCtx.autoplay = true
-    // audioCtx.loop = false
-    // audioCtx.src = this.state.musicUrl
-    // backgroundAudioManager.title = name
-    // backgroundAudioManager.coverImgUrl = al.picUrl
-    // backgroundAudioManager.src = this.state.musicUrl
+    // this.getMusicUrl(id)
+    // this.getMusicComment(id)
+    // this.getMusicDetail(id)
+    // this.getMusicWord(id)
+    this.playMusic(id)
   } 
   componentWillReceiveProps (nextProps,nextContext) {} 
   componentWillUnmount () {} 
@@ -87,13 +82,13 @@ export default class Player extends Component {
     }
     api.get('/song/detail',params)
     .then(res => {
-      console.log('详情》》》》》',res.data)
+      // console.log('详情》》》》》',res.data)
       Taro.setNavigationBarTitle({
         title: res.data.songs[0].name
       })
       this.setState({
         songDetail: res.data.songs
-      })
+      },backgroundAudioManager.title = res.data.songs[0].name)
     })
   }
   // 获取音乐url
@@ -103,11 +98,11 @@ export default class Player extends Component {
     }
     api.get('/song/url',params)
     .then(res => {
-      console.log('URL》》》》》',res.data)
+      // console.log('URL》》》》》',res.data)
       // backgroundAudioManager.src = res.data.data[0].url
       this.setState({
         musicUrl: res.data.data[0].url
-      })
+      },backgroundAudioManager.src = res.data.data[0].url)
     })
   }
   // 获取歌词
@@ -117,7 +112,7 @@ export default class Player extends Component {
     }
     api.get('/lyric',params)
     .then(res => {
-      console.log('歌词》》》》》',res.data)
+      // console.log('歌词》》》》》',res.data)
       this.setState({
         musicWord: res.data.lrc.lyric
       })
@@ -131,7 +126,7 @@ export default class Player extends Component {
     }
     api.get('/comment/music',params)
     .then(res => {
-      console.log('评论》》》》》',res.data)
+      // console.log('评论》》》》》',res.data)
       this.setState({
         commentList: res.data.comments,
         hotCommentList: res.data.hotComments
@@ -142,21 +137,43 @@ export default class Player extends Component {
   pauseMusic = ()=> {
     backgroundAudioManager.pause()
     this.props.changePlayType(false)
-    this.setState({
-      isPlaying: false
-    })
-  }
-  // 播放
-  playMusic = ()=> {
-    console.log('aa')
-    backgroundAudioManager.src = this.state.musicUrl
-    backgroundAudioManager.title = this.state.songDetail[0].name
-    backgroundAudioManager.play()
-    this.props.changePlayType(true)
-    console.log('props>>>>>>>',this.props)
     let isPlaying = this.props.play.isPlaying
+    console.log(isPlaying)
     this.setState({
       isPlaying
+    })
+  }
+  // 播放歌曲
+  playMusic(id) {
+    this.getMusicUrl(id)
+    this.getMusicDetail(id)
+    this.getMusicComment(id)
+    this.getMusicWord(id)
+    console.log('musicUrl>>>>>>>>>>>',this.state)
+    backgroundAudioManager.play()
+    this.props.changePlayType(true)
+    let isPlaying = this.props.play.isPlaying
+    console.log(isPlaying)
+    this.setState({
+      isPlaying
+    })
+    BackgroundAudioManager.onEnded(() => {
+      console.log('播放结束')
+      this.goLastSong()
+    })
+  }
+  // 点击播放
+  handlePlayMusic = ()=> {
+    backgroundAudioManager.play()
+    this.props.changePlayType(true)
+    let isPlaying = this.props.play.isPlaying
+    console.log(isPlaying)
+    this.setState({
+      isPlaying
+    })
+    BackgroundAudioManager.onEnded(() => {
+      console.log('播放结束')
+      this.goLastSong()
     })
   }
   // 下一首
@@ -170,11 +187,8 @@ export default class Player extends Component {
     let list = this.state.musicList
     console.log(list[index])
     let id = list[index].id
-    this.getMusicUrl(id)
-    this.getMusicComment(id)
-    this.getMusicDetail(id)
-    this.getMusicWord(id)
-    this.playMusic()
+    console.log('id>>>>>',id)
+    this.playMusic(id)
   }
 
   // 上一首
@@ -186,13 +200,9 @@ export default class Player extends Component {
     })
     console.log('索引》》》》》》》',index)
     let list = this.state.musicList
-    console.log(list[index])
+    // console.log(list[index])
     let id = list[index].id
-    this.getMusicUrl(id)
-    this.getMusicComment(id)
-    this.getMusicDetail(id)
-    this.getMusicWord(id)
-    this.playMusic()
+    this.playMusic(id)
   }
 
   //显示歌词
@@ -200,7 +210,7 @@ export default class Player extends Component {
     // console.log('props>>>>>>>',this.props)
     // this.props.changePlayType(true)
     this.setState ({
-      isShowLyric: true
+      isShowLyric: !this.state.isShowLyric
     })
   }
   render() {
@@ -227,9 +237,9 @@ export default class Player extends Component {
             {/* <!-- 一开始onload时,showLyric=true, 显示为转动的图标，点击图标，切换为歌词--> */}
             <View class="sing-show" onClick={this.showLyric}>
               {
-                this.state.musicWord ? <View class={this.state.isPlaying ? 'moveCircle play' : 'moveCircle'}>
+                !this.state.isShowLyric ? <View class={this.state.isPlaying ? 'moveCircle play' : 'moveCircle'}>
                 <image src={al.picUrl} class={ this.state.isPlaying ? 'coverImg play' : 'coverImg'} />
-              </ View> : <text class="songLyric">纯音乐，请欣赏</text>
+              </ View> : <text class="songLyric">{this.state.musicWord}</text>
               }
             </ View>
             {/* <!-- 暂停播放图标 --> */}
@@ -237,7 +247,7 @@ export default class Player extends Component {
               <View class="icon_playing " onClick={this.goPrevSong}><image src={prev} class=" icon_play" /></View>
               <View class="icon_playing">
                 {
-                  !this.state.isPlaying ? <View onClick={this.playMusic}><image src={paly} class="{{'img_play_suspend'}}" /></View>
+                  !this.state.isPlaying ? <View onClick={this.handlePlayMusic}><image src={paly} class="{{'img_play_suspend'}}" /></View>
                   : <View onClick={this.pauseMusic}><image src={stop} hidden="{{isPlay}}" class="{{'img_play_suspend'}}" /></View>
                 }
                 
