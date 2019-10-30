@@ -2,9 +2,14 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, Swiper, SwiperItem } from '@tarojs/components'
 import './index.scss'
 import api from '../../utils/api'
+import {connect} from '@tarojs/redux'
 
 import { AtButton } from 'taro-ui'
 import Gedan from '../../components/gedan/Gedan'
+
+@connect (({ getSongInfo }) => ({
+  getSongInfo
+}))
 
 export default class Index extends Component {
 

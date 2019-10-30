@@ -1,15 +1,17 @@
 import Taro , { Component } from '@tarojs/taro';
-import { View, Text , ScrollView} from '@tarojs/components';
-import { AtSlider } from 'taro-ui'
+import { View, Text , ScrollView, Slider} from '@tarojs/components';
+// import { AtSlider } from 'taro-ui'
 import api from '../../utils/api'
 import './index.scss'
 import {connect} from '@tarojs/redux'
 import { playTypeFun } from '../../action/paly'
+import { getSongInfo } from '../../action/songInfo'
 
 import prev from '../../images/shangyishou.png'
 import next from '../../images/xiayishou.png'
 import paly from '../../images/bofang.png'
 import stop from '../../images/zanting.png'
+import { from } from '_rxjs@6.5.3@rxjs';
 // import { dispatch } from '../../../../../../../AppData/Local/Microsoft/TypeScript/3.6/node_modules/rxjs/internal/observable/pairs';
 
 const backgroundAudioManager = Taro.getBackgroundAudioManager()
@@ -24,6 +26,14 @@ const backgroundAudioManager = Taro.getBackgroundAudioManager()
 
 @connect (({ getMusicList }) => ({
   getMusicList
+}))
+
+@connect (({ songInfo }) => ({
+  songInfo
+}),(dispatch) => ({
+  setSongInfo(data) {
+    dispatch(getSongInfo(data))
+  }
 }))
 
 export default class Player extends Component {
@@ -89,27 +99,19 @@ export default class Player extends Component {
       })
       this.goLastSong()
     })
-    
+    let songInfo = {
+      src: this.state.musicUrl || 'anc',
+      title: this.state.songDetail[0].name || 'aaa',
+      imgUrl: this.state.songDetail[0].al.picUrl || '123'
+    }
+    this.props.setSongInfo(songInfo)
   } 
   componentWillReceiveProps (nextProps,nextContext) {} 
   componentWillUnmount () {
 
   } 
   componentDidShow () {
-    const query = Taro.createSelectorQuery().in(this.$scope).select('.progress-line')
-    console.log(query)
-    query.boundingClientRect(rect => {
-          // rect.id      // 节点的 ID
-          // rect.dataset // 节点的 dataset
-          // rect.left    // 节点的左边界坐标
-          // rect.right   // 节点的右边界坐标
-          // rect.top     // 节点的上边界坐标
-          // rect.bottom  // 节点的下边界坐标
-          // rect.width   // 节点的宽度
-          // rect.height  // 节点的高度
-          console.log(rect)
-        })
-        .exec()
+    
   } 
   componentDidHide () {} 
   componentDidCatchError () {} 
@@ -310,10 +312,12 @@ export default class Player extends Component {
   // 点击白色进度条任意位置，红色进度条到达点击处
   handleSeek = (e) => {
     // 获取当前位置
-    // console.log(e)
-    var offsetX = e.touches[0].pageX - e.currentTarget.offsetLeft
+    console.log(e)
+    // var offsetX = e.touches[0].pageX - e.currentTarget.offsetLeft
+    // console.log(offsetX)
+    let value = e.detail.value
     // 获取当前位置站总宽度的百分比
-    var p = offsetX / this.state.width
+    var p = value / 100
     // seek跳转至指定位置，
     // this.state.durationTime*p,获取位置百分比在总时间中的占比
     backgroundAudioManager.seek(this.state.durationTime*p)
@@ -370,11 +374,7 @@ export default class Player extends Component {
             <View class="footer">
               <View class="progress-bar">
                 <View>{this.state.currentTime}</View>
-                <View class="progress-line" onClick={this.handleSeek}> 
-                  <View class="progress-bg"></View>
-                  <View class="progress-red"></View>
-                </View>
-                {/* <AtSlider max={Number(this.state.duration)} backgroundColor="#fff" blockSize={14} activeColor="#542375" onChange={this.handleSeek}></AtSlider> */}
+                <Slider class="slider" value={this.state.progressPercent} blockSize={12} step={0.1} max={100} activeColor="#542375" onChange={this.handleSeek}/>
                 <View>{this.state.duration}</View>
               </View>
             </View>
@@ -386,8 +386,6 @@ export default class Player extends Component {
                   !this.state.isPlaying ? <View onClick={this.handlePlayMusic}><image src={paly} class="{{'img_play_suspend'}}" /></View>
                   : <View onClick={this.pauseMusic}><image src={stop} hidden="{{isPlay}}" class="{{'img_play_suspend'}}" /></View>
                 }
-                
-                
                 {/* <image onClick={this.pauseMusic} src={stop} hidden="{{isPlay}}" class="{{'img_play_suspend'}}" /> */}
               </View> 
               <View class="icon_playing " onClick={this.goLastSong}><image src={next} class=" icon_play" /></View>

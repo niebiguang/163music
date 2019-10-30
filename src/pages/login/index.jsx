@@ -22,6 +22,7 @@ export default class Index extends Component {
       account: '',//账号
       password: '',//密码
       isLogin: false,//是否登录
+      toast: false,//密码错误
     }
   }
 
@@ -41,6 +42,21 @@ export default class Index extends Component {
             url: '/pages/index/index'
           })
           console.log(res)
+        }else if(res.data.code === 502) {
+          // Taro.showToast({
+          //   title: '密码错误',
+          //   icon: 'success',
+          //   duration: 2000
+          // })
+          Taro.showModal({
+            title: '提示',
+            content: '密码错误',
+          })
+        }else if(res.data.code === 509) {
+          Taro.showModal({
+            title: '提示',
+            content: '密码错误超过限制，请稍后登录',
+          })
         }
       })
     } else {

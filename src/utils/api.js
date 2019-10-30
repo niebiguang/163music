@@ -3,12 +3,15 @@ import { HTTP_STATUS } from '../const/status'
 import { base } from './config'
 import { logError } from './http'
 
-let cookie = Taro.getStorageSync('cookie')
 
-const baseUrl = 'http://localhost:3000'
+
+// const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://www.nbgking.com:3000'
 
 export default {
+  
   baseOptions(params, method = 'GET') {
+    let cookie = Taro.getStorageSync('cookie')
     let { url, data } = params
     // let token = getApp().globalData.token
     // if (!token) login()
